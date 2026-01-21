@@ -1,0 +1,421 @@
+/* Import design system variables */
+@import '../../styles/variables.css';
+
+/* ============================================
+   Login Component Styles
+   ============================================ */
+
+/* Main Container */
+.container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  background: linear-gradient(135deg, #EFF6FF 0%, #F3E8FF 50%, #FCE7F3 100%);
+}
+
+[data-theme="dark"] .container {
+  background: linear-gradient(135deg, #111827 0%, #1F2937 50%, #111827 100%);
+}
+
+/* Dark Mode Toggle Button */
+.darkModeToggle {
+  position: fixed;
+  top: var(--space-6);
+  right: var(--space-6);
+  padding: var(--space-3);
+  background-color: var(--color-white);
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-lg);
+  transition: box-shadow var(--transition-base);
+  z-index: 10;
+  border: none;
+  cursor: pointer;
+}
+
+[data-theme="dark"] .darkModeToggle {
+  background-color: var(--color-gray-800);
+}
+
+.darkModeToggle:hover {
+  box-shadow: var(--shadow-xl);
+}
+
+.darkModeToggle svg {
+  width: 20px;
+  height: 20px;
+  color: var(--color-gray-600);
+}
+
+[data-theme="dark"] .darkModeToggle svg {
+  color: var(--color-gray-300);
+}
+
+/* Login Card Wrapper */
+.cardWrapper {
+  width: 100%;
+  max-width: 28rem; /* 448px */
+}
+
+/* Login Card */
+.card {
+  background-color: var(--color-white);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-2xl);
+  padding: var(--space-8);
+  border: 1px solid var(--color-gray-100);
+}
+
+[data-theme="dark"] .card {
+  background-color: var(--color-gray-800);
+  border-color: var(--color-gray-700);
+}
+
+/* Header Section */
+.header {
+  text-align: center;
+  margin-bottom: var(--space-8);
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-4);
+}
+
+.logo {
+  width: 5rem; /* 80px */
+  height: 5rem;
+}
+
+.title {
+  color: var(--color-gray-900);
+  margin-bottom: var(--space-2);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+}
+
+[data-theme="dark"] .title {
+  color: var(--color-white);
+}
+
+.subtitle {
+  color: var(--color-gray-600);
+  font-size: var(--font-size-base);
+}
+
+[data-theme="dark"] .subtitle {
+  color: var(--color-gray-400);
+}
+
+/* Form */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+/* Form Group */
+.formGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-700);
+  margin-bottom: var(--space-2);
+  display: block;
+  font-weight: var(--font-weight-medium);
+}
+
+[data-theme="dark"] .label {
+  color: var(--color-gray-300);
+}
+
+/* Input Container */
+.inputContainer {
+  position: relative;
+}
+
+.inputIcon {
+  position: absolute;
+  left: var(--space-3);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  color: var(--color-gray-400);
+  pointer-events: none;
+}
+
+.input {
+  width: 100%;
+  padding: var(--space-3) var(--space-4) var(--space-3) 2.75rem; /* 44px left padding for icon */
+  background-color: var(--color-gray-50);
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--radius-xl);
+  font-size: var(--font-size-base);
+  color: var(--color-gray-900);
+  transition: all var(--transition-base);
+}
+
+[data-theme="dark"] .input {
+  background-color: var(--color-gray-900);
+  border-color: var(--color-gray-700);
+  color: var(--color-white);
+}
+
+.input::placeholder {
+  color: var(--color-gray-500);
+}
+
+.input:focus {
+  outline: none;
+  ring: 2px;
+  ring-color: var(--color-primary-blue);
+  border-color: transparent;
+  box-shadow: 0 0 0 2px var(--color-primary-blue);
+}
+
+.input.error {
+  border-color: var(--color-error);
+}
+
+/* Password Input (additional right padding for toggle button) */
+.passwordInput {
+  padding-right: 3rem; /* 48px */
+}
+
+/* Password Toggle Button */
+.passwordToggle {
+  position: absolute;
+  right: var(--space-3);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-gray-400);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--space-1);
+  transition: color var(--transition-base);
+}
+
+.passwordToggle:hover {
+  color: var(--color-gray-600);
+}
+
+[data-theme="dark"] .passwordToggle:hover {
+  color: var(--color-gray-300);
+}
+
+.passwordToggle svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Error Message */
+.errorMessage {
+  color: var(--color-error);
+  font-size: var(--font-size-sm);
+  margin-top: var(--space-1);
+}
+
+/* Remember Me & Forgot Password Row */
+.formRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  cursor: pointer;
+}
+
+.checkbox {
+  width: 16px;
+  height: 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-gray-300);
+  cursor: pointer;
+}
+
+.checkboxLabel span {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-700);
+}
+
+[data-theme="dark"] .checkboxLabel span {
+  color: var(--color-gray-300);
+}
+
+.forgotLink {
+  font-size: var(--font-size-sm);
+  color: var(--color-primary-blue);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color var(--transition-base);
+}
+
+[data-theme="dark"] .forgotLink {
+  color: var(--color-primary-blue);
+}
+
+.forgotLink:hover {
+  color: var(--color-primary-blue-hover);
+}
+
+/* Submit Button */
+.submitButton {
+  width: 100%;
+  padding: var(--space-3);
+  background: linear-gradient(90deg, var(--color-primary-blue) 0%, var(--color-primary-purple) 100%);
+  color: var(--color-white);
+  border: none;
+  border-radius: var(--radius-xl);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.submitButton:hover {
+  box-shadow: var(--shadow-lg);
+  transform: scale(1.02);
+}
+
+.submitButton:active {
+  transform: scale(0.98);
+}
+
+/* Sign Up Link Section */
+.signupSection {
+  margin-top: var(--space-6);
+  text-align: center;
+}
+
+.signupText {
+  color: var(--color-gray-600);
+  font-size: var(--font-size-base);
+}
+
+[data-theme="dark"] .signupText {
+  color: var(--color-gray-400);
+}
+
+.signupLink {
+  color: var(--color-primary-blue);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color var(--transition-base);
+  font-size: var(--font-size-base);
+}
+
+[data-theme="dark"] .signupLink {
+  color: var(--color-primary-blue);
+}
+
+.signupLink:hover {
+  color: var(--color-primary-blue-hover);
+}
+
+/* Divider */
+.divider {
+  margin-top: var(--space-8);
+  display: flex;
+  align-items: center;
+}
+
+.dividerLine {
+  flex: 1;
+  height: 1px;
+  background-color: var(--color-gray-200);
+}
+
+[data-theme="dark"] .dividerLine {
+  background-color: var(--color-gray-700);
+}
+
+.dividerText {
+  padding: 0 var(--space-4);
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-500);
+}
+
+[data-theme="dark"] .dividerText {
+  color: var(--color-gray-400);
+}
+
+/* Social Login Buttons */
+.socialButtons {
+  margin-top: var(--space-6);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-3);
+}
+
+.socialButton {
+  padding: var(--space-3) var(--space-4);
+  background-color: var(--color-gray-50);
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--radius-xl);
+  cursor: pointer;
+  transition: background-color var(--transition-base);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+}
+
+[data-theme="dark"] .socialButton {
+  background-color: var(--color-gray-900);
+  border-color: var(--color-gray-700);
+}
+
+.socialButton:hover {
+  background-color: var(--color-gray-100);
+}
+
+[data-theme="dark"] .socialButton:hover {
+  background-color: var(--color-gray-800);
+}
+
+.socialButton svg {
+  width: 20px;
+  height: 20px;
+}
+
+.socialButton span {
+  color: var(--color-gray-700);
+  font-size: var(--font-size-base);
+}
+
+[data-theme="dark"] .socialButton span {
+  color: var(--color-gray-300);
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+
+@media (max-width: 640px) {
+  .container {
+    padding: var(--space-2);
+  }
+
+  .card {
+    padding: var(--space-6);
+  }
+
+  .darkModeToggle {
+    top: var(--space-4);
+    right: var(--space-4);
+  }
+}

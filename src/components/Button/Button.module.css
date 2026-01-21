@@ -1,0 +1,203 @@
+/* Import design system variables */
+@import '../../styles/variables.css';
+
+/* ============================================
+   Button Component Styles
+   ============================================ */
+
+/* Base Button Styles */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  border-radius: var(--radius-lg);
+  font-family: var(--font-primary);
+  font-weight: var(--font-weight-medium);
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  box-shadow: var(--shadow-sm);
+}
+
+.button:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--color-primary-blue);
+}
+
+.button:active {
+  transform: scale(0.98);
+}
+
+/* Disabled State */
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.button:disabled:hover {
+  box-shadow: var(--shadow-sm);
+}
+
+/* ============================================
+   Variant Styles
+   ============================================ */
+
+/* Primary Variant */
+.buttonPrimary {
+  background-color: var(--color-primary-blue);
+  color: var(--color-white);
+}
+
+.buttonPrimary:hover:not(:disabled) {
+  background-color: var(--color-primary-blue-hover);
+}
+
+/* Secondary Variant */
+.buttonSecondary {
+  background-color: var(--color-gray-600);
+  color: var(--color-white);
+}
+
+.buttonSecondary:hover:not(:disabled) {
+  background-color: var(--color-gray-700);
+}
+
+/* Outline Variant */
+.buttonOutline {
+  background-color: transparent;
+  border: 2px solid var(--color-primary-blue);
+  color: var(--color-primary-blue);
+}
+
+.buttonOutline:hover:not(:disabled) {
+  background-color: #EFF6FF; /* blue-50 */
+}
+
+[data-theme="dark"] .buttonOutline:hover:not(:disabled) {
+  background-color: rgba(59, 130, 246, 0.2); /* blue-900/20 */
+}
+
+/* Ghost Variant */
+.buttonGhost {
+  background-color: transparent;
+  color: var(--color-gray-700);
+  box-shadow: none;
+}
+
+[data-theme="dark"] .buttonGhost {
+  color: var(--color-gray-300);
+}
+
+.buttonGhost:hover:not(:disabled) {
+  background-color: var(--color-gray-100);
+  box-shadow: none;
+}
+
+[data-theme="dark"] .buttonGhost:hover:not(:disabled) {
+  background-color: var(--color-gray-700);
+}
+
+/* Danger Variant */
+.buttonDanger {
+  background-color: var(--color-error);
+  color: var(--color-white);
+}
+
+.buttonDanger:hover:not(:disabled) {
+  background-color: #DC2626; /* red-700 */
+}
+
+/* Gradient Variant */
+.buttonGradient {
+  background: linear-gradient(90deg, var(--color-primary-blue) 0%, var(--color-primary-purple) 100%);
+  color: var(--color-white);
+}
+
+.buttonGradient:hover:not(:disabled) {
+  background: linear-gradient(90deg, var(--color-primary-blue-hover) 0%, var(--color-primary-purple-hover) 100%);
+}
+
+/* ============================================
+   Size Variants
+   ============================================ */
+
+/* Small Size */
+.buttonSm {
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--font-size-sm);
+}
+
+/* Medium Size (Default) */
+.buttonMd {
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--font-size-base);
+}
+
+/* Large Size */
+.buttonLg {
+  padding: var(--space-3) var(--space-6);
+  font-size: var(--font-size-lg);
+}
+
+/* ============================================
+   Full Width
+   ============================================ */
+
+.buttonFullWidth {
+  width: 100%;
+}
+
+/* ============================================
+   Loading State
+   ============================================ */
+
+.loadingSpinner {
+  width: 16px;
+  height: 16px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loadingSpinnerCircle {
+  opacity: 0.25;
+}
+
+.loadingSpinnerPath {
+  opacity: 0.75;
+}
+
+/* ============================================
+   Icon Styling
+   ============================================ */
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ============================================
+   Responsive Adjustments
+   ============================================ */
+
+@media (max-width: 640px) {
+  /* Make buttons slightly smaller on mobile */
+  .buttonLg {
+    padding: var(--space-2) var(--space-5);
+    font-size: var(--font-size-base);
+  }
+}
