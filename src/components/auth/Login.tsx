@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Grid3x3, Mail, Lock, Eye, EyeOff, Moon, Sun } from 'lucide-react';
+import { Mail, Lock, Eye, EyeOff, Moon, Sun, ArrowRight, Github } from 'lucide-react';
 import vizlyLogo from 'figma:asset/96bf4512efe4ad439d153f2c27b017ec43a256da.png';
 
 interface LoginProps {
@@ -19,59 +19,62 @@ export default function Login({ onLogin, onNavigateToSignUp, onNavigateToForgot,
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Basic validation
     const newErrors: { username?: string; password?: string } = {};
     
-    if (!username.trim()) {
-      newErrors.username = 'Username is required';
-    }
-    
-    if (!password.trim()) {
-      newErrors.password = 'Password is required';
-    }
+    if (!username.trim()) newErrors.username = 'Required';
+    if (!password.trim()) newErrors.password = 'Required';
     
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
     }
     
-    // Clear errors and login
     setErrors({});
     onLogin();
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
-      {/* Dark Mode Toggle */}
+    <div className="min-h-screen flex items-center justify-center p-6 bg-[#fcfcfd] dark:bg-[#050505] transition-colors duration-700 font-sans relative overflow-hidden">
+      
+      {/* Dynamic Background Glows */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] bg-blue-500/10 dark:bg-blue-600/10 blur-[120px] rounded-full animate-pulse" />
+        <div className="absolute bottom-[-10%] left-[-5%] w-[500px] h-[500px] bg-purple-500/10 dark:bg-indigo-600/10 blur-[120px] rounded-full animate-pulse" style={{ animationDelay: '2s' }} />
+      </div>
+
+      {/* Modern Theme Switcher */}
       <button
         onClick={() => onToggleDarkMode(!darkMode)}
-        className="fixed top-6 right-6 p-3 bg-white dark:bg-gray-800 rounded-full shadow-lg hover:shadow-xl transition-all z-10"
+        className="fixed top-8 right-8 z-50 p-3 bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-2xl shadow-xl hover:scale-110 active:scale-95 transition-all group"
       >
-        {darkMode ? <Sun className="w-5 h-5 text-gray-600 dark:text-gray-300" /> : <Moon className="w-5 h-5 text-gray-600" />}
+        {darkMode ? (
+          <Sun className="w-5 h-5 text-amber-400 group-hover:rotate-45 transition-transform" />
+        ) : (
+          <Moon className="w-5 h-5 text-slate-600 group-hover:-rotate-12 transition-transform" />
+        )}
       </button>
 
-      {/* Login Card */}
-      <div className="w-full max-w-md">
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-8 border border-gray-100 dark:border-gray-700">
-          {/* Logo & Header */}
-          <div className="text-center mb-8">
-            <div className="flex items-center justify-center mb-4">
-              <img src={vizlyLogo} alt="Vizly" className="w-20 h-20" />
+      <div className="w-full max-w-[460px] z-10">
+        <div className="bg-white/70 dark:bg-zinc-950/40 backdrop-blur-3xl rounded-[40px] shadow-[0_32px_64px_-16px_rgba(0,0,0,0.1)] dark:shadow-[0_40px_100px_rgba(0,0,0,0.7)] p-10 border border-white dark:border-white/10 dark:border-t-white/20">
+          
+          {/* Header Section */}
+          <div className="flex flex-col items-center mb-10">
+            <div className="w-20 h-20 bg-white dark:bg-zinc-900 rounded-[28px] flex items-center justify-center shadow-2xl dark:shadow-none border border-slate-100 dark:border-zinc-800 mb-6 group transition-transform hover:rotate-3">
+              <img src={vizlyLogo} alt="Vizly" className="w-12 h-12 object-contain" />
             </div>
-            <h1 className="text-gray-900 dark:text-white mb-2">Log In</h1>
-            <p className="text-gray-600 dark:text-gray-400">Log in to your Vizly account</p>
+            <h1 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight mb-2">Welcome Back</h1>
+            <p className="text-slate-500 dark:text-zinc-400 font-medium">Continue your journey with Vizly</p>
           </div>
 
-          {/* Login Form */}
-          <form onSubmit={handleSubmit} className="space-y-5">
-            {/* Username Field */}
-            <div>
-              <label className="text-sm text-gray-700 dark:text-gray-300 mb-2 block">
-                Username or Email
-              </label>
-              <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Username Input */}
+            <div className="space-y-2">
+              <div className="flex justify-between px-1">
+                <label className="text-[11px] font-bold uppercase tracking-widest text-slate-400 dark:text-zinc-500">Email Address</label>
+                {errors.username && <span className="text-[11px] font-bold text-red-500 uppercase">{errors.username}</span>}
+              </div>
+              <div className="relative group">
+                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-300 dark:text-zinc-600 group-focus-within:text-blue-500 transition-colors" />
                 <input
                   type="text"
                   value={username}
@@ -79,24 +82,20 @@ export default function Login({ onLogin, onNavigateToSignUp, onNavigateToForgot,
                     setUsername(e.target.value);
                     setErrors({ ...errors, username: undefined });
                   }}
-                  placeholder="Enter your username or email"
-                  className={`w-full pl-11 pr-4 py-3 bg-gray-50 dark:bg-gray-900 border ${
-                    errors.username ? 'border-red-500' : 'border-gray-200 dark:border-gray-700'
-                  } rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 dark:text-white placeholder-gray-500 transition-all`}
+                  placeholder="Enter your email"
+                  className="w-full pl-12 pr-4 py-4 bg-slate-100/50 dark:bg-white/[0.03] border-2 border-transparent focus:border-blue-500/20 dark:focus:border-blue-500/40 focus:bg-white dark:focus:bg-zinc-900 rounded-[20px] focus:outline-none focus:ring-4 focus:ring-blue-500/5 dark:focus:ring-blue-500/10 text-slate-900 dark:text-zinc-100 transition-all placeholder:text-slate-400 dark:placeholder:text-zinc-700 font-medium"
                 />
               </div>
-              {errors.username && (
-                <p className="text-red-500 text-sm mt-1">{errors.username}</p>
-              )}
             </div>
 
-            {/* Password Field */}
-            <div>
-              <label className="text-sm text-gray-700 dark:text-gray-300 mb-2 block">
-                Password
-              </label>
-              <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+            {/* Password Input */}
+            <div className="space-y-2">
+              <div className="flex justify-between px-1">
+                <label className="text-[11px] font-bold uppercase tracking-widest text-slate-400 dark:text-zinc-500">Password</label>
+                {errors.password && <span className="text-[11px] font-bold text-red-500 uppercase">{errors.password}</span>}
+              </div>
+              <div className="relative group">
+                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-300 dark:text-zinc-600 group-focus-within:text-blue-500 transition-colors" />
                 <input
                   type={showPassword ? 'text' : 'password'}
                   value={password}
@@ -104,91 +103,87 @@ export default function Login({ onLogin, onNavigateToSignUp, onNavigateToForgot,
                     setPassword(e.target.value);
                     setErrors({ ...errors, password: undefined });
                   }}
-                  placeholder="Enter your password"
-                  className={`w-full pl-11 pr-12 py-3 bg-gray-50 dark:bg-gray-900 border ${
-                    errors.password ? 'border-red-500' : 'border-gray-200 dark:border-gray-700'
-                  } rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 dark:text-white placeholder-gray-500 transition-all`}
+                  placeholder="••••••••"
+                  className="w-full pl-12 pr-12 py-4 bg-slate-100/50 dark:bg-white/[0.03] border-2 border-transparent focus:border-blue-500/20 dark:focus:border-blue-500/40 focus:bg-white dark:focus:bg-zinc-900 rounded-[20px] focus:outline-none focus:ring-4 focus:ring-blue-500/5 dark:focus:ring-blue-500/10 text-slate-900 dark:text-zinc-100 transition-all placeholder:text-slate-400 dark:placeholder:text-zinc-700 font-medium"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-blue-500 transition-colors p-1"
                 >
                   {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                 </button>
               </div>
-              {errors.password && (
-                <p className="text-red-500 text-sm mt-1">{errors.password}</p>
-              )}
             </div>
 
-            {/* Remember Me & Forgot Password */}
-            <div className="flex items-center justify-between">
-              <label className="flex items-center space-x-2 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={rememberMe}
-                  onChange={(e) => setRememberMe(e.target.checked)}
-                  className="rounded text-blue-600 focus:ring-blue-500 focus:ring-offset-0"
-                />
-                <span className="text-sm text-gray-700 dark:text-gray-300">Remember me</span>
+            {/* Options */}
+            <div className="flex items-center justify-between pt-1">
+              <label className="flex items-center gap-3 cursor-pointer group/check">
+                <div className="relative flex items-center justify-center">
+                  <input
+                    type="checkbox"
+                    checked={rememberMe}
+                    onChange={(e) => setRememberMe(e.target.checked)}
+                    className="peer appearance-none w-6 h-6 border-2 border-slate-200 dark:border-white/10 rounded-lg checked:bg-blue-600 dark:checked:bg-blue-500 transition-all cursor-pointer"
+                  />
+                  <ArrowRight className="absolute w-3.5 h-3.5 text-white opacity-0 peer-checked:opacity-100 transition-opacity" />
+                </div>
+                <span className="text-sm font-bold text-slate-500 dark:text-zinc-400 group-hover/check:text-slate-900 dark:group-hover/check:text-zinc-200 transition-colors">Keep me signed in</span>
               </label>
               <button
                 type="button"
                 onClick={onNavigateToForgot}
-                className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors"
+                className="text-sm font-black text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors underline-offset-4 hover:underline"
               >
-                Forgot Password?
+                Forgot?
               </button>
             </div>
 
-            {/* Login Button */}
+            {/* Submit Button */}
             <button
               type="submit"
-              className="w-full py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl hover:shadow-lg hover:scale-[1.02] transition-all duration-200"
+              className="group relative w-full py-4 bg-slate-900 dark:bg-white text-white dark:text-black font-black rounded-[20px] overflow-hidden transition-all hover:scale-[1.02] active:scale-[0.98] shadow-2xl dark:shadow-white/5"
             >
-              Log In
+              <span className="relative flex items-center justify-center gap-2">
+                Sign In to Dashboard <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              </span>
             </button>
           </form>
 
-          {/* Sign Up Link */}
-          <div className="mt-6 text-center">
-            <p className="text-gray-600 dark:text-gray-400">
-              Don't have an account?{' '}
-              <button
-                onClick={onNavigateToSignUp}
-                className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors"
-              >
-                Sign up
+          {/* Social Auth */}
+          <div className="mt-10">
+            <div className="flex items-center gap-4 mb-8">
+              <div className="flex-1 h-px bg-slate-100 dark:bg-white/5" />
+              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 dark:text-zinc-600">Fast Connect</span>
+              <div className="flex-1 h-px bg-slate-100 dark:bg-white/5" />
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <button className="flex items-center justify-center gap-3 py-3.5 px-4 bg-white dark:bg-zinc-900/50 border border-slate-200 dark:border-white/5 rounded-2xl hover:bg-slate-50 dark:hover:bg-zinc-800 transition-all font-bold text-slate-700 dark:text-zinc-300 text-sm">
+                <svg className="w-5 h-5" viewBox="0 0 24 24">
+                  <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                  <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                  <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                  <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                </svg>
+                Google
               </button>
-            </p>
+              <button className="flex items-center justify-center gap-3 py-3.5 px-4 bg-white dark:bg-zinc-900/50 border border-slate-200 dark:border-white/5 rounded-2xl hover:bg-slate-50 dark:hover:bg-zinc-800 transition-all font-bold text-slate-700 dark:text-zinc-300 text-sm">
+                <Github className="w-5 h-5 text-slate-900 dark:text-white" />
+                GitHub
+              </button>
+            </div>
           </div>
 
-          {/* Divider */}
-          <div className="mt-8 flex items-center">
-            <div className="flex-1 h-px bg-gray-200 dark:bg-gray-700"></div>
-            <span className="px-4 text-sm text-gray-500 dark:text-gray-400">or continue with</span>
-            <div className="flex-1 h-px bg-gray-200 dark:bg-gray-700"></div>
-          </div>
-
-          {/* Social Login Buttons */}
-          <div className="mt-6 grid grid-cols-2 gap-3">
-            <button className="py-3 px-4 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors flex items-center justify-center space-x-2">
-              <svg className="w-5 h-5" viewBox="0 0 24 24">
-                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-              </svg>
-              <span className="text-gray-700 dark:text-gray-300">Google</span>
+          <p className="mt-10 text-center text-sm font-semibold text-slate-500 dark:text-zinc-500">
+            New here?{' '}
+            <button
+              onClick={onNavigateToSignUp}
+              className="text-blue-600 dark:text-blue-400 font-black hover:underline underline-offset-4"
+            >
+              Create Account
             </button>
-            <button className="py-3 px-4 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors flex items-center justify-center space-x-2">
-              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" className="text-gray-700 dark:text-gray-300"/>
-              </svg>
-              <span className="text-gray-700 dark:text-gray-300">GitHub</span>
-            </button>
-          </div>
+          </p>
         </div>
       </div>
     </div>
